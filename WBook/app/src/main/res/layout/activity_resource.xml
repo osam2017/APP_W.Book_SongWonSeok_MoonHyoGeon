@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="left|center_vertical|center_horizontal|center"
+        android:text="Android Studio 2.3.3
+built on June 6, 2017
+JRE: 1.8.0_112-release-b06 amd64
+JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+노드 js버전 6.11.3
+mysql 버전 6.3.9
+sublime text 3.0 버전"
+        android:textColor="#000000"
+        android:textSize="20dp" />
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+
+    android:background="#ffffffff">
+
+
+    <LinearLayout
+        android:id="@+id/email_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:orientation="vertical"
+        android:layout_marginTop="70dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="114dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="60dp"
+            app:srcCompat="@drawable/main_icon"
+            />
+
+        <EditText
+            android:id="@+id/login_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_id"
+            android:inputType="textEmailAddress"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/login_pw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_password"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:layout_margin="10dp"
+            android:maxLines="1" />
+
+        <Button
+            android:id="@+id/sign_in_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/main_action_sign_in"
+            android:layout_margin="10dp"
+            android:background="#81bef7"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/register_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#00ff0000"
+            android:onClick="buttonRegister"
+            android:text="@string/main_action_register"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
