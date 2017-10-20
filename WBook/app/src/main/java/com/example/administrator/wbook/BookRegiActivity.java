@@ -113,24 +113,24 @@ public class BookRegiActivity extends Activity {
         //=========================================================================
     }
     //=============================================================================
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Bitmap bitmap = null;
-        if (resultCode == RESULT_OK && requestCode == SELECT_IMAGE) {
-            Uri image = intent.getData();
-            try {
-                bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), image);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            ImageView imgView = (ImageView) findViewById(R.id.imageView2);
-            imgView.setImageBitmap(bitmap);
-        }
-
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        Bitmap bitmap = null;
+//        if (resultCode == RESULT_OK && requestCode == SELECT_IMAGE) {
+//            Uri image = intent.getData();
+//            try {
+//                bitmap = android.provider.MediaStore.Images.Media.getBitmap(getContentResolver(), image);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            ImageView imgView = (ImageView) findViewById(R.id.imageView2);
+//            imgView.setImageBitmap(bitmap);
+//        }
+//
+//    }
     //=============================================================================
     //=============================================================================
     public void runnningCheckThread(final String textisbn){
