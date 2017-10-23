@@ -55,7 +55,6 @@ public class MyReviewActivity extends Activity {
 
         try {
             url = new URL(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/reviewview?num_review="+num_review+"&num_pf_s="+num_pf_s);
-            //Log.i(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/reviewview?num_review="+num_review+"&num_pf_s="+num_pf_s,"            aaaaaaaaa");
             //connection기본설정
             conn = RelativeServer.connectionReturn(url);
             conn.connect();

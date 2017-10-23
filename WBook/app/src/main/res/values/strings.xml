@@ -13,5 +13,4 @@
     <string name="register_action_register">회원가입</string>
     <string name="register_prompt_password_confirm">비밀번호 확인</string>
     <string name="register_prompt_name_confirm">이름</string>
-
 </resources>

@@ -116,7 +116,7 @@
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#81bef7"
+        android:background="@color/colorBack"
         android:text="독서 기록 추가" />
 
     <ListView

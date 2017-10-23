@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-
-    android:background="#ffffffff">
+    android:background="@color/colorBack">
 
 
     <LinearLayout
@@ -59,7 +58,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/main_action_sign_in"
             android:layout_margin="10dp"
-            android:background="#81bef7"
+            android:background="@color/colorMainBtnColor"
             android:textStyle="bold" />
 
         <Button

@@ -8,7 +8,7 @@
 
         <shape android:shape="rectangle">
 
-            <solid android:color="#81bef7" />
+            <solid android:color="@color/colorMainBtnColor" />
 
         </shape>
 

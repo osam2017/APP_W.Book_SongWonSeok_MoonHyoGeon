@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#81bef7"
+            android:background="@color/colorMainBtnColor"
             android:layout_weight="1"
             android:text="책등록"
             android:descendantFocusability="blocksDescendants"/>
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#81bef7"
+            android:background="@color/colorMainBtnColor"
             android:layout_weight="1"
             android:text="설정"
             android:descendantFocusability="blocksDescendants"/>

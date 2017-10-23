@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:background="#81bef7"
+                android:background="@color/colorMainBtnColor"
                 android:text="중복 체크" />
 
         </LinearLayout>
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="#81bef7"
+            android:background="@color/colorMainBtnColor"
             android:text="@string/register_action_register"
             android:textStyle="bold" />
     </LinearLayout>

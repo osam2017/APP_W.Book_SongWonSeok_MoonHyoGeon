@@ -1,31 +1,32 @@
 package com.example.administrator.wbook;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
+import java.io.IOException;
+
+import static java.lang.Thread.*;
 
 /**
  * Created by Administrator on 2017-10-20.
  */
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView3) ;
-        imageView1.setImageResource(R.drawable.main_icon) ;
 
         try {
-            Thread.sleep(3000);
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        finish();
     }
 }

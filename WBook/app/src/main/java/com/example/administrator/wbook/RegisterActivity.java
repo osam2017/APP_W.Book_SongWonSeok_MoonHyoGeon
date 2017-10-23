@@ -76,14 +76,20 @@ public class RegisterActivity extends Activity{
                             if (!textpw_et.equals(textpw_et_check)) {
                                 Toast.makeText(getApplicationContext(), "비밀번호가 다릅니다!", Toast.LENGTH_LONG).show();
                             } else {
-                                new Thread(new Runnable() {
-                                    public void run() {
-                                        runnningThread(textid, textpw_et, textname_et);
-                                    }
-                                }).start();
+                                if(!textname_et.isEmpty()){
+                                    new Thread(new Runnable() {
+                                        public void run() {
+                                            runnningThread(textid, textpw_et, textname_et);
+                                        }
+                                    }).start();
+                                }else{
+                                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요!", Toast.LENGTH_LONG).show();
+                                    name_et.requestFocus();
+                                }
                             }
                         }else{
                             Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요!", Toast.LENGTH_LONG).show();
+                            pw_et.requestFocus();
                         }
                     }else{
                         Toast.makeText(getApplicationContext(), "아이디 체크를 해주세요!", Toast.LENGTH_LONG).show();

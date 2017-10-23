@@ -6,6 +6,7 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     tools:context=".MainActivity">
+
     <Button
         android:id="@+id/button6"
         android:layout_width="180dp"
@@ -13,8 +14,8 @@
         android:gravity="center_horizontal|center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="#81bef7"
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
         android:text="추천책" />
 
     <Button
@@ -25,9 +26,9 @@
         android:layout_below="@+id/button6"
         android:layout_alignStart="@+id/button6"
         android:layout_alignLeft="@+id/button6"
-        android:layout_marginTop="40dp"
-        android:background="#81bef7"
-        android:text="내가쓴글"/>
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
+        android:text="내히스토리"/>
 
     <Button
         android:id="@+id/button8"
@@ -37,8 +38,8 @@
         android:layout_below="@+id/button7"
         android:layout_alignStart="@+id/button6"
         android:layout_alignLeft="@+id/button6"
-        android:layout_marginTop="40dp"
-        android:background="#81bef7"
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
         android:text="개발자정보"/>
 
     <Button
@@ -49,8 +50,8 @@
         android:layout_below="@+id/button8"
         android:layout_alignLeft="@+id/button6"
         android:layout_alignStart="@+id/button6"
-        android:layout_marginTop="40dp"
-        android:background="#81bef7"
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
         android:text="리소스 정보" />
 
     <Button
@@ -61,9 +62,19 @@
         android:layout_below="@+id/button12"
         android:layout_alignLeft="@+id/button6"
         android:layout_alignStart="@+id/button6"
-        android:layout_marginTop="40dp"
-        android:background="#81bef7"
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
         android:text="돌아가기" />
 
-
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center"
+        android:layout_below="@+id/button9"
+        android:layout_alignLeft="@+id/button6"
+        android:layout_alignStart="@+id/button6"
+        android:layout_marginTop="28dp"
+        android:background="@color/colorMainBtnColor"
+        android:text="로그아웃" />
 </RelativeLayout>

@@ -25,7 +25,10 @@ public class SettingActivity extends Activity {
         recom_button.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "추후 개발 예정입니다! 감사합니다!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),RecommActivity.class);
+                        intent.putExtra("id", loginid);
+                        intent.putExtra("num", loginnum);
+                        startActivities(intent);
                     }
                 }
         );
@@ -75,6 +78,18 @@ public class SettingActivity extends Activity {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         finish();
+                    }
+                }
+        );
+
+        Button logout_button =(Button)findViewById(R.id.logout_button);
+        logout_button.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
                 }
         );
