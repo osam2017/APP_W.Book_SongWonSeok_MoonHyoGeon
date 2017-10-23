@@ -29,6 +29,8 @@
         <activity android:name=".MyReviewActivity"/>
         <activity android:name=".DeverloperAcitivity"/>
         <activity android:name=".ResourceActivity"/>
+        <activity android:name=".RecommActivity"/>
+        <activity android:name=".RecommLoadingActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

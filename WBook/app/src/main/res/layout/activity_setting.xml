@@ -77,4 +77,5 @@
         android:layout_marginTop="28dp"
         android:background="@color/colorMainBtnColor"
         android:text="로그아웃" />
+
 </RelativeLayout>
