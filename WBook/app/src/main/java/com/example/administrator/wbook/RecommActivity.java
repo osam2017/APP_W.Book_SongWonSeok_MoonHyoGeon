@@ -89,7 +89,7 @@ public class RecommActivity extends Activity {
 
             }
             lastlist = articlelist;
-            final String nullcheck=lastlist.get(0).getTitle();
+            final String nullcheck="";
             //==============================================================================
             runOnUiThread(new Runnable() {
                 @Override

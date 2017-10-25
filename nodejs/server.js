@@ -1,7 +1,19 @@
+//var multer = require('multer');
+//var storage = multer.diskStorage({
+//	  destination: function (req, file, cb) {
+//		cb(null, './upload/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+//	  },
+//	  filename: function (req, file, cb) {
+//		cb(null, new Date().valueOf() + path.extname(file.originalname) ) // cb 콜백함수를 통해 전송된 파일 이름 설정
+//	  }
+//})
+var formidable = require('formidable');
+var savePath = './upload/';
 var express = require('express');
+//var path = require('path');
 var mysql = require('mysql');
-var app = express();
-
+var fs = require('fs');
+//var upload = multer({ storage: storage })
 var connection = mysql.createConnection({
     host	: 'localhost',
     query	: { pool : true },
@@ -10,7 +22,13 @@ var connection = mysql.createConnection({
     database : 'osam',
 	multipleStatements : true //다중 쿼리를 수행가능하게 설정하는 부분
 });
+var app = express();
 connection.connect();
+///app.use(formidable());
+
+
+
+
 
 //로그인
 app.get('/logincheck', function(request, response){
@@ -21,18 +39,19 @@ app.get('/logincheck', function(request, response){
 			response.sendStatus(400);
 			return;
 		}
-	 	if(rows.length == 0){
-	 		jsondate= '{"num":"not","id":"not","result":"false"}';
-	 		response.send(jsondate);
-	 		response.end();
-	 	}else{
-	 		jsondate= '{"num":"' + rows[0].num;
-	 		jsondate= jsondate + '","id":"' + rows[0].id + '","result":"true"}';
-	 		response.send(jsondate);
-	 		response.end();
-	 	}	
+		if(rows.length == 0){
+			jsondate= '{"num":"not","id":"not","result":"false"}';
+			response.send(jsondate);
+			response.end();
+		}else{
+			jsondate= '{"num":"' + rows[0].num;
+			jsondate= jsondate + '","id":"' + rows[0].id + '","result":"true"}';
+			response.send(jsondate);
+			response.end();
+		}	
 	});
 });
+
 
 
 
@@ -43,21 +62,21 @@ app.get('/checkid', function(request, response){
 						SELECT id	\
 						FROM wb_profile\
 						WHERE id= ' +request.query.id;
-
+		var jsondate;
 		connection.query(likeSql, function (error, rows) {
-				if (error){
-					response.sendStatus(400);
-					return;
-				}
-			 	if(rows.length == 0){
-			 		jsondate= '{"checkid":"good","title":"not","likenum":"not"}';
-			 		response.send(jsondate);
-			 		response.end();
-			 	}else{
-			 		jsondate= '{"checkid":"not","title":"not","likenum":"not"}';
-			 		response.send(jsondate);
-			 		response.end();
-				}	
+			if (error){
+				response.sendStatus(400);
+				return;
+			}
+			if(rows.length == 0){
+				jsondate= '{"checkid":"good","title":"not","likenum":"not"}';
+				response.send(jsondate);
+				response.end();
+			}else{
+				jsondate= '{"checkid":"not","title":"not","likenum":"not"}';
+				response.send(jsondate);
+				response.end();
+			}	
 		});
 });
 
@@ -73,16 +92,19 @@ app.get('/regi', function(request, response){
 						VALUES\
 						("'+ request.query.id +'","'+ request.query.pw +'","'+request.query.name+'")\
 					';
-		connection.query(likeSql, function (error, rows, fields) {
+		var jsondate;
+		connection.query(likeSql, function (error) {
 				if (error){
 					response.sendStatus(400);
 					return;
 				}
-		 		jsondate= '{"title":"not","num":"not"}'; 
-		 		response.send(jsondate);
-		 		response.end();
-		 });
+				jsondate= '{"title":"not","num":"not"}'; 
+				response.send(jsondate);
+				response.end();
+		});
 });
+
+
 
 
 
@@ -131,6 +153,8 @@ app.get('/booklist', function(request, response){
 
 
 
+
+
 //ISBN체크
 app.get('/checkisbn', function(request, response){
 		var likeSql = ' \
@@ -157,28 +181,114 @@ app.get('/checkisbn', function(request, response){
 
 
 
+app.get('/home', function (req, res){
+	    res.send(
+        '<html>' +
+        '<head><meta charset="utf-8"></head>' +
+        '<body>' +
+        '<form action="/regibookimg" enctype="multipart/form-data" method="post">'+
+		'<input type="text" name="title"><br>'+
+		'<input type="text" name="isbn"><br>'+
+        '<input type="file" name="imageurl" multiple="multiple"><br>'+
+        '<input type="submit" value="Upload">'+
+        '</form>'+
+        '</body></html>'
+    );
+});
 
 //책등록
-app.get('/regibook', function(request, response){
-		var likeSql = ' \
-						INSERT INTO wb_book	\
-						(title,isbn)\
-						VALUES\
-						("'+ request.query.title +'","'+ request.query.isbn +'")\
-					';
-		connection.query(likeSql, function (error) {
-				if (error){
-					response.sendStatus(400);
-					return;
-				}
-			
-				jsondate= '{"title":"not","num":"not"}'; 
-		 		response.send(jsondate);
-		 		response.end();
+var isFormData= function(req){
+	var type = req.headers['content-type'] || '';
+	return 0 == type.indexOf('multipart/form-data');
+}
+
+app.post('/regibookimg', function (req, res){
+    var form = new formidable.IncomingForm();
+	var body = {};
+	var finename;
+    
+	if(!isFormData(req)){
+		res.sendStatus(400).end('Bad request');
+		console.log('bad');
+		return;
+	}
+	
+	form.parse(req);
+	form.on('field', function (name, value,err){
+		if(err){
+			console.log('ond');
+		}else{
+			body[name]=value;	
+		}
+		
+    });
+    form.on('fileBegin', function (name, file,err){
+				if(err){
+			console.log('on');
+		}
+        file.path = savePath + new Date().valueOf() + file.name;
+		finename=new Date().valueOf() + file.name;
+    });
+	form.on('end', function(err) {
+				if(err){
+			console.log('end');
+		}
+		var sql =	'INSERT INTO wb_book (title, isbn, imageurl)' +
+					'VALUES(?,?,?)';
+		var args = [body.title, body.isbn, finename];
+		connection.query(sql, args, function(err) {
+		 if (err) {
+			 res.sendStatus(500);
+			 console.log(args);
+			 return;
+		 }
+			res.sendStatus(200);
 		 });
+	}); 
 });
 
 
+
+
+
+app.get('/image/:filename',function (req, res){
+	var path = savePath + req.params.filename;
+	fs.exists(path, function(exists){
+		if(exists){
+			var stream = fs.createReadStream(savePath + req.params.filename);
+			stream.pipe(res);
+			stream.on('close',function(){
+				res.end;		  
+			});
+		}else{
+			res.sendStatus(204)
+		}	
+	});
+});
+
+
+
+
+
+////책등록
+//app.get('/regibook', function(request, response){
+//		var likeSql = ' \
+//						INSERT INTO wb_book	\
+//						(title,isbn)\
+//						VALUES\
+//						("'+ request.query.title +'","'+ request.query.isbn +'")\
+//					';
+//		connection.query(likeSql, function (error) {
+//				if (error){
+//					response.sendStatus(400);
+//					return;
+//				}
+//			
+//				jsondate= '{"title":"not","num":"not"}'; 
+//		 		response.send(jsondate);
+//		 		response.end();
+//		 });
+//});
 
 
 
@@ -219,7 +329,7 @@ app.get('/book', function(request, response){
 app.get('/reviewlist', function(request, response){
 	var listSql = 'SELECT num,title,num_pf_s\
 					FROM wb_book_review WHERE num_bk_s=' + request.query.num_bk;
-//	var jsondate;
+	var jsondate;
 	connection.query(listSql, function (error, rows) {
 		if (error){
 			response.sendStatus(400);
@@ -249,6 +359,8 @@ app.get('/reviewlist', function(request, response){
 	 	}	
 	});
 });
+
+
 
 
 
@@ -519,9 +631,6 @@ app.get('/recommendbook', function(request, response){
 				for(var y=0;y<userLikeBookArray.length;y++){
 					n=0;
 					for(var u=0;u<recommenBookArray.length;u++){
-				
-						
-						
 						if(userLikeBookArray[y].num_bk == recommenBookArray[u]){
 							for(var r=0;r<recommenBookArray.length;r++){
 								if(r!=u){
@@ -532,10 +641,7 @@ app.get('/recommendbook', function(request, response){
 							recommenBookArray = recommenBookLastArray.slice();
 							recommenBookLastArray=new Array();
 							break;
-						}
-						
-						
-						
+						}		
 					}
 				}
 				//==================================================================

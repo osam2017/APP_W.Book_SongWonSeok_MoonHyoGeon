@@ -1,7 +1,10 @@
 package com.example.administrator.wbook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,18 +42,22 @@ public class BookActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView) ;
-        imageView1.setImageResource(R.drawable.book_icon) ;
+
+//        ImageView imageView1 = (ImageView) findViewById(R.id.imageView) ;
+//        imageView1.setImageResource(R.drawable.book_icon) ;
+//
         Intent intent = getIntent();
 
         final String loginid = getIntent().getExtras().getString("id_pf");
         final String loginnum = getIntent().getExtras().getString("num_pf");
         final int num_bk = getIntent().getExtras().getInt("num_bk");
 
+        final FileDownloader fileDownloader = new FileDownloader(getApplicationContext());
+
         //===============================책내용 불러오기
         new Thread(new Runnable() {
             public void run() {
-                runnningThread(num_bk);
+                runnningThread(num_bk,fileDownloader);
             }
         }).start();
         //==============================
@@ -86,8 +94,8 @@ public class BookActivity extends Activity{
                 }
         );
     }
-
-    public void runnningThread(final int num_bk){
+    //===================================================================================================책내용
+    public void runnningThread(final int num_bk,final FileDownloader fileDownloader){
         URL url = null;
         HttpURLConnection conn = null;
         OutputStream os = null;
@@ -118,6 +126,17 @@ public class BookActivity extends Activity{
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    fileDownloader.downFile(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/image/"+imageUrl, imageUrl);
+                    ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                    String img_path = getApplicationContext().getFilesDir().getPath() + "/" + imageUrl;
+
+                    File img_load_path = new File(img_path);
+                    Toast.makeText(getApplicationContext(), img_load_path.toString(), Toast.LENGTH_LONG).show();
+                    if(img_load_path.exists()){
+                        Bitmap bitmap = BitmapFactory.decodeFile(img_path);
+                        imageView.setImageBitmap(bitmap);
+                    }
+
                     TextView titletv=(TextView)findViewById(R.id.textView6);
                     titletv.setText(title);
                     TextView isbntv=(TextView)findViewById(R.id.textView9);

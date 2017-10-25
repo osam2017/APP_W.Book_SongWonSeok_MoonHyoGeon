@@ -88,6 +88,7 @@ public class SettingActivity extends Activity {
         logout_button.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
