@@ -42,15 +42,18 @@ public class RecommActivity extends Activity {
         Intent intent = getIntent();
         final String loginid = getIntent().getExtras().getString("id");
         final String loginnum = getIntent().getExtras().getString("num");
+        final String jsonstring = getIntent().getExtras().getString("jsonstring");
+
 
         new Thread(new Runnable() {
             public void run() {
-                runnningThread(loginid,loginnum);
+                runnningThread(loginid,loginnum,jsonstring);
             }
         }).start();
 
     }
-    public void runnningThread(String id,String num){
+
+    public void runnningThread(String id,String num, String jsonstring){
         final String id_pf = id;
         final String num_pf = num;
         URL url = null;
@@ -60,22 +63,22 @@ public class RecommActivity extends Activity {
         Boolean result=null;
 
         try {
-            url = new URL(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/recommendbook?num_pf="+num);
-
-
-            //connection기본설정
-            conn = RelativeServer.connectionReturn(url);
-            conn.connect();
-
-            //서버에서 받는 데이터
-            InputStream isText = conn.getInputStream();
-            byte[] bText = new byte[2048];
-            int readSize = isText.read(bText);
-            final String modistring = new String(bText);
-            isText.close();
-            conn.disconnect();
+//            url = new URL(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/recommendbook?num_pf="+num);
+//
+//
+//            //connection기본설정
+//            conn = RelativeServer.connectionReturn(url);
+//            conn.connect();
+//
+//            //서버에서 받는 데이터
+//            InputStream isText = conn.getInputStream();
+//            byte[] bText = new byte[2048];
+//            int readSize = isText.read(bText);
+//            final String modistring = new String(bText);
+//            isText.close();
+//            conn.disconnect();
             //==============================================================================
-            JSONArray jsnobject = new JSONArray(modistring);
+            JSONArray jsnobject = new JSONArray(jsonstring);
             ArrayList<Book> articlelist =new ArrayList<Book>();
 
 
@@ -119,10 +122,6 @@ public class RecommActivity extends Activity {
                     }
                 }
             });
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }

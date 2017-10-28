@@ -40,7 +40,6 @@ public class MyBookActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mybook);
-
         Intent intent = getIntent();
         final String loginid = getIntent().getExtras().getString("id");
         final String loginnum = getIntent().getExtras().getString("num");
@@ -51,12 +50,19 @@ public class MyBookActivity extends Activity {
                 runnningThread(loginid,loginnum);
             }
         }).start();
-
     }
-
+    protected  void onResume(){
+        super.onResume();
+        new Thread(new Runnable() {
+            public void run() {
+                runnningThread(sendloginid,sendloginnum);
+            }
+        }).start();
+    }
     public void runnningThread(final String loginid, final String loginnum){
         final String id_pf = loginid;
         final String num_pf = loginnum;
+        ListView listview;
 
         URL url = null;
         HttpURLConnection conn = null;
@@ -104,10 +110,10 @@ public class MyBookActivity extends Activity {
                         for (int i = 0; i < lastlist.size(); i++) {
                             items.add(lastlist.get(i).getTitle());
                         }
-
                         ArrayAdapter customAdapter = new ArrayAdapter(getBaseContext(), simple_list_item_1, items);
                         ListView listview = (ListView) findViewById(R.id.myrevielist);
                         listview.setAdapter(customAdapter);
+
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -152,10 +158,11 @@ public class MyBookActivity extends Activity {
     }
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info= (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int index= info.position; //AdapterView안에서 ContextMenu를 보여즈는 항목의 위치
+        final int index= info.position; //AdapterView안에서 ContextMenu를 보여즈는 항목의 위치
         switch( item.getItemId() ){
             case R.id.delete:
                 Toast.makeText(this, items.get(index)+" Delete", Toast.LENGTH_SHORT).show();
+
                 final int num_bk = lastlist.get(index).getNum();
                 new Thread(new Runnable() {
                     public void run() {
@@ -192,15 +199,15 @@ public class MyBookActivity extends Activity {
             conn.disconnect();
 
             JSONObject json = new JSONObject(jsonstring);
-
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(), MyBookActivity.class);
+                    ArrayList<String> items2=null;
+                    ArrayAdapter customAdapter = new ArrayAdapter(getBaseContext(), simple_list_item_1, items);
+                    ListView listview = (ListView) findViewById(R.id.myrevielist);
+                    listview.setAdapter(customAdapter);
 
-                    intent.putExtra("id", sendloginid);
-                    intent.putExtra("num", sendloginnum);
-                    startActivity(intent);
+                    onResume();
                 }
             });
         } catch (MalformedURLException e) {

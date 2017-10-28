@@ -261,12 +261,13 @@ public class BookRegiActivity extends Activity {
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(), "등록되었습니다!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), BookMenuActivity.class);
-                    intent.putExtra("id", loginid);
-                    intent.putExtra("num", loginnum);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), BookMenuActivity.class);
+//                    intent.putExtra("id", loginid);
+//                    intent.putExtra("num", loginnum);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+                    finish();
                 }
             });
         } catch (Exception e) {

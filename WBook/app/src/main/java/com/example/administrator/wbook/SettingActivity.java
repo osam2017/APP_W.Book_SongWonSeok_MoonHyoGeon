@@ -25,9 +25,7 @@ public class SettingActivity extends Activity {
         recom_button.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-
                         Intent intent = new Intent(getApplicationContext(), RecommLoadingActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //A->B 로가는 시점에서 사용하면 A=>B->C C가 사라지는 시즘에서 B도 사라진다
                         intent.putExtra("id", loginid);
                         intent.putExtra("num", loginnum);
                         startActivity(intent);
@@ -41,7 +39,6 @@ public class SettingActivity extends Activity {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), MyBookActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY); //A->B 로가는 시점에서 사용하면 A=>B->C C가 사라지는 시즘에서 B도 사라진다
                         intent.putExtra("id", loginid);
                         intent.putExtra("num", loginnum);
                         startActivity(intent);

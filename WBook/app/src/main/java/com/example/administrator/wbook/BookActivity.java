@@ -131,7 +131,7 @@ public class BookActivity extends Activity{
                     String img_path = getApplicationContext().getFilesDir().getPath() + "/" + imageUrl;
 
                     File img_load_path = new File(img_path);
-                    Toast.makeText(getApplicationContext(), img_load_path.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), img_load_path.toString(), Toast.LENGTH_LONG).show();
                     if(img_load_path.exists()){
                         Bitmap bitmap = BitmapFactory.decodeFile(img_path);
                         imageView.setImageBitmap(bitmap);

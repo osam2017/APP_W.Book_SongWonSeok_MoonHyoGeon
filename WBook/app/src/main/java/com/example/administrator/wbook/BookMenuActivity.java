@@ -75,6 +75,14 @@ public class BookMenuActivity extends Activity {
                 }
         );
     }
+    protected  void onResume(){
+        super.onResume();
+        new Thread(new Runnable() {
+            public void run() {
+                runnningThread(id,num);
+            }
+        }).start();
+    }
 
     public void runnningThread(String id,String num){
         final String id_pf = id;

@@ -1,0 +1,12 @@
+insert into wb_profile (id,pw,name) values('sws12','1234','송원석');
+insert into wb_profile (id,pw,name) values('mhg12','1234','문효건');
+insert into wb_profile (id,pw,name) values('hsm12','1234','홍성목');
+insert into wb_profile (id,pw,name) values('hgj12','1234','홍기정');
+
+
+insert into wb_profile (title,pw,name) values('알고리즘으로 배우는 인공지능, 머신러닝, 딥러닝 입문','1','15091695295461.jpg');
+insert into wb_profile (id,pw,name) values('머신러닝, 딥러닝 실전 개발 입문','2','15091695415662.jpg');
+insert into wb_profile (id,pw,name) values('처음배우는 머신러닝','3','15091695697643.jpg');
+insert into wb_profile (id,pw,name) values('디스커버리 go언어','4','15091695779484.jpg');
+insert into wb_profile (id,pw,name) values('Why? 인공지능','5','15091695870635.jpg');
+insert into wb_profile (id,pw,name) values('파이썬 라이브러리','6','15091695939796.jpg');

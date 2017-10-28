@@ -1,12 +1,3 @@
-//var multer = require('multer');
-//var storage = multer.diskStorage({
-//	  destination: function (req, file, cb) {
-//		cb(null, './upload/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
-//	  },
-//	  filename: function (req, file, cb) {
-//		cb(null, new Date().valueOf() + path.extname(file.originalname) ) // cb 콜백함수를 통해 전송된 파일 이름 설정
-//	  }
-//})
 var formidable = require('formidable');
 var savePath = './upload/';
 var express = require('express');
@@ -24,7 +15,7 @@ var connection = mysql.createConnection({
 });
 var app = express();
 connection.connect();
-///app.use(formidable());
+
 
 
 
@@ -180,22 +171,6 @@ app.get('/checkisbn', function(request, response){
 });
 
 
-
-app.get('/home', function (req, res){
-	    res.send(
-        '<html>' +
-        '<head><meta charset="utf-8"></head>' +
-        '<body>' +
-        '<form action="/regibookimg" enctype="multipart/form-data" method="post">'+
-		'<input type="text" name="title"><br>'+
-		'<input type="text" name="isbn"><br>'+
-        '<input type="file" name="imageurl" multiple="multiple"><br>'+
-        '<input type="submit" value="Upload">'+
-        '</form>'+
-        '</body></html>'
-    );
-});
-
 //책등록
 var isFormData= function(req){
 	var type = req.headers['content-type'] || '';
@@ -265,30 +240,6 @@ app.get('/image/:filename',function (req, res){
 		}	
 	});
 });
-
-
-
-
-
-////책등록
-//app.get('/regibook', function(request, response){
-//		var likeSql = ' \
-//						INSERT INTO wb_book	\
-//						(title,isbn)\
-//						VALUES\
-//						("'+ request.query.title +'","'+ request.query.isbn +'")\
-//					';
-//		connection.query(likeSql, function (error) {
-//				if (error){
-//					response.sendStatus(400);
-//					return;
-//				}
-//			
-//				jsondate= '{"title":"not","num":"not"}'; 
-//		 		response.send(jsondate);
-//		 		response.end();
-//		 });
-//});
 
 
 

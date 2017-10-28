@@ -1,0 +1,3 @@
+cmd ¸í·É¾î
+
+adb install C:\Users\sws28\Desktop\APP_W.Book_SongWonSeok_MoonHyoGeon-master\hangulkeyboard.apk
