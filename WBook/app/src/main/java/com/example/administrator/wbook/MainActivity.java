@@ -9,13 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import android.widget.ImageView;
 
 
@@ -37,7 +30,6 @@ public class MainActivity extends Activity{
         sign_in_button.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-
                         //===========================================변수
                         int checkid=0;
                         EditText idcheck_edit = (EditText)findViewById(R.id.login_id);
@@ -74,62 +66,45 @@ public class MainActivity extends Activity{
         );
     }
 
-    public void runnningThread(String id,String pw){
-        URL url = null;
-        HttpURLConnection conn = null;
-        OutputStream os = null;
-        JSONObject jo = null;
-        String num=null;
+    public void runnningThread(final String id,final String pw){
+        ConnectionTemplate template = new ConnectionTemplate();
+        template.runContext(new Strategy() {
 
-        try {
-            //url(http://localhost:1338)
-            url = new URL(RelativeHttp.http_protocol+RelativeHttp.http_local_server+":"+RelativeHttp.port+"/logincheck?id=\""+id+"\"&pw=\""+pw+"\"");
-
-            //connection기본설정
-            conn = RelativeServer.connectionReturn(url);
-            conn.connect();
-
-            //서버에서 받는 데이터
-            InputStream isText = conn.getInputStream();
-            byte[] bText = new byte[2048];
-            int readSize = isText.read(bText);
-            String jsonstring = new String(bText);
-            isText.close();
-            conn.disconnect();
-
-            JSONObject json = new JSONObject(jsonstring);
-            final String sendid = json.getString("id");
-            final String sendnum = json.getString("num") ;
-            final String result = json.getString("result") ;
-
-            if(result.equals("true")){
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), BookMenuActivity.class);
-                        intent.putExtra("id", sendid);
-                        intent.putExtra("num", sendnum);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
-            }else{
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인해주세요!", Toast.LENGTH_LONG).show();
-                    }
-                });
+            @Override
+            public String urlStrategy() {
+                return "/logincheck?id=\""+id+"\"&pw=\""+pw+"\"";
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+            @Override
+            public void uiStrategy(final JSONObject jsonobject) throws JSONException{
+
+                final String sendid = jsonobject.getString("id");
+                final String sendnum = jsonobject.getString("num") ;
+                final String result = jsonobject.getString("result") ;
+
+                if(result.equals("true")){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "로그인 성공!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), BookMenuActivity.class);
+                            intent.putExtra("id", sendid);
+                            intent.putExtra("num", sendnum);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    });
+                }else{
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인해주세요!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 }
 

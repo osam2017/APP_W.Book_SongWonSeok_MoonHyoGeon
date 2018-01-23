@@ -94,6 +94,10 @@ public class BookActivity extends Activity{
                 }
         );
     }
+
+
+
+
     //===================================================================================================책내용
     public void runnningThread(final int num_bk,final FileDownloader fileDownloader){
         URL url = null;
@@ -153,6 +157,8 @@ public class BookActivity extends Activity{
             e.printStackTrace();
         }
     }
+
+
 
 
     //=======================================================================================================리스트
